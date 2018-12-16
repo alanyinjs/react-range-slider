@@ -1,4 +1,4 @@
-# React sliding bar
+# React range slider
 
 This project is aiming to simulate the behaviour of the sliding bars on [Sky Scanner](https://www.skyscanner.com.au) and [Kayak](https://www.kayak.com.au/).
 
@@ -12,3 +12,4 @@ This project is aiming to simulate the behaviour of the sliding bars on [Sky Sca
 - Change the style to mimic the one on the actual website
 - Add functionality to allow value output
 - Add functionality to allow intervals
+- Add keyboard support
