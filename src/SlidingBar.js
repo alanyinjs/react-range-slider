@@ -15,7 +15,7 @@ export default class SlidingBar extends React.Component {
 
     componentDidMount() {
         window.addEventListener(
-            'mouseup', 
+            'mouseup',
             this.finishDragging,
         );
         window.addEventListener(
@@ -36,7 +36,7 @@ export default class SlidingBar extends React.Component {
     }
 
     startDragging(e) {
-        const { left: startPosition } = this.slider.getBoundingClientRect();
+        const {left: startPosition} = this.slider.getBoundingClientRect();
         const mouseOffset = e.clientX - startPosition;
         e.preventDefault();
         this.setState({
@@ -44,7 +44,7 @@ export default class SlidingBar extends React.Component {
             mouseOffset,
         });
     }
-    
+
     finishDragging(e) {
         e.preventDefault();
         this.setState({
@@ -56,7 +56,7 @@ export default class SlidingBar extends React.Component {
         const min = 0;
         const max = 100;
         let position;
-        if(this.state.isDragging){
+        if(this.state.isDragging) {
             const mousePosition = e.clientX;
             const mouseOffset = this.state.mouseOffset;
             const {x, width} = this.slidingTrack.getBoundingClientRect();
@@ -80,14 +80,17 @@ export default class SlidingBar extends React.Component {
         const position = this.state.position;
         return (
             <>
-                <div className="wrapper" ref={el => (this.slidingTrack = el)}>
-                    <div 
+                <div
+                    className="wrapper"
+                    ref={(el) => (this.slidingTrack = el)}
+                >
+                    <div
                         className="slider"
-                        ref={el => (this.slider = el)}
-                        style={{ left: `${position}%`}}
                         onMouseDown={this.startDragging}
-                        onMouseUp={this.finishDragging}
                         onMouseMove={this.updatePosition}
+                        onMouseUp={this.finishDragging}
+                        ref={(el) => (this.slider = el)}
+                        style={{left: `${position}%`}}
                     >
                     </div>
                 </div>
