@@ -53,22 +53,31 @@ export default class SlidingBar extends React.Component {
     }
 
     updatePosition(e) {
-        const min = 0;
-        const max = 100;
-        let position;
         if(this.state.isDragging) {
-            const mousePosition = e.clientX;
+            // get position and width of the track
+            const {
+                x,
+                width: trackWidth,
+            } = this.slidingTrack.getBoundingClientRect();
+            const {width: sliderWidth} = this.slider.getBoundingClientRect();
+            // get mouse offset position on slider
             const mouseOffset = this.state.mouseOffset;
-            const {x, width} = this.slidingTrack.getBoundingClientRect();
-            const distance = Math.round(
-                ((mousePosition - mouseOffset - x) / width) * 100
-            ).toFixed(2);
-            if(distance < min) {
-                position = min;
-            } else if(distance > max) {
-                position = max;
+            const maxSlidingWidth = trackWidth - sliderWidth;
+            const mousePosition = e.clientX;
+            // get percentage mouse position relative to left edge
+            const percentageDistance = (
+                (mousePosition - mouseOffset - x) / maxSlidingWidth
+            ) * 100;
+            // set left and right boundaries of slider
+            const min = 0;
+            const max = (trackWidth - sliderWidth) / trackWidth * 100;
+            let position;
+            if(percentageDistance < min) {
+                position = min.toFixed(2);
+            } else if(percentageDistance > max) {
+                position = max.toFixed(2);
             } else {
-                position = distance;
+                position = percentageDistance.toFixed(2);
             }
             this.setState({
                 position,
@@ -88,7 +97,6 @@ export default class SlidingBar extends React.Component {
                         className="slider"
                         onMouseDown={this.startDragging}
                         onMouseMove={this.updatePosition}
-                        onMouseUp={this.finishDragging}
                         ref={(el) => (this.slider = el)}
                         style={{left: `${position}%`}}
                     >
